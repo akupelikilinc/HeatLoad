@@ -39,6 +39,8 @@ Windows için, saatin hemen üstünde duran küçük bir masaüstü widget'ı: *
 
 <img src="docs/compact.png" alt="Kompakt görünüm" width="236">
 
+Her sürümün değişiklikleri ve görselleri: **[CHANGELOG.md](CHANGELOG.md)**.
+
 ## Gereksinimler
 
 - Windows 10 veya 11, 64 bit

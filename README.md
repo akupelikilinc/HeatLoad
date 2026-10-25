@@ -41,6 +41,8 @@ A tiny always-on-top widget for Windows that shows live **CPU, GPU and RAM usage
 
 > The interface is currently in Turkish. The menu is: *show/hide widget*, *show temperatures*, *compact view*, *settings…*, *quit*.
 
+Every release, with its own screenshots: **[CHANGELOG.md](CHANGELOG.md)**.
+
 ## Requirements
 
 - Windows 10 or 11, 64-bit
