@@ -20,13 +20,17 @@ Windows için, saatin hemen üstünde duran küçük bir masaüstü widget'ı: *
 
 ## Ekran görüntüleri
 
-| Kullanım | Sıcaklık |
-|:--:|:--:|
-| <img src="docs/usage.png" alt="Kullanım görünümü" width="382"> | <img src="docs/temperature.png" alt="Sıcaklık görünümü" width="382"> |
+**Sıcaklık görünümü** — aynı kart, sıcak değer büyür, yük köşede kalır.
 
-| Sağ tık menüsü | Ayarlar |
-|:--:|:--:|
-| <img src="docs/menu.png" alt="Sağ tık menüsü" width="440"> | <img src="docs/settings.png" alt="Ayarlar penceresi" width="330"> |
+<img src="docs/temperature.png" alt="Sıcaklık görünümü" width="382">
+
+**Sağ tık menüsü** — göstergede ve tepsi simgesinde aynı.
+
+<img src="docs/menu.png" alt="Sağ tık menüsü" width="440">
+
+**Ayarlar** — varsayılan görünüm, açılışta başlat, göstergeyi kapat.
+
+<img src="docs/settings.png" alt="Ayarlar penceresi" width="330">
 
 ## Gereksinimler
 

@@ -20,13 +20,17 @@ A tiny always-on-top widget for Windows that shows live **CPU, GPU and RAM usage
 
 ## Screenshots
 
-| Usage | Temperature |
-|:--:|:--:|
-| <img src="docs/usage.png" alt="Usage mode" width="382"> | <img src="docs/temperature.png" alt="Temperature mode" width="382"> |
+**Temperature view** — same card, the hot value goes big, the load stays in the corner.
 
-| Right-click menu | Settings |
-|:--:|:--:|
-| <img src="docs/menu.png" alt="Context menu" width="440"> | <img src="docs/settings.png" alt="Settings window" width="330"> |
+<img src="docs/temperature.png" alt="Temperature mode" width="382">
+
+**Right-click menu** — identical on the widget and on the tray icon.
+
+<img src="docs/menu.png" alt="Context menu" width="440">
+
+**Settings** — default view, start with Windows, hide the widget.
+
+<img src="docs/settings.png" alt="Settings window" width="330">
 
 > The interface is currently in Turkish. The menu is: *show/hide widget*, *show temperatures*, *settings…*, *quit*.
 
