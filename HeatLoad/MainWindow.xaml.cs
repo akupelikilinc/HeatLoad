@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +23,7 @@ public partial class MainWindow : Window
     private SettingsWindow? _settings;
     private Reading _last;
     private bool _temperatureFirst = AppSettings.TemperatureFirst;
+    private bool _compact = AppSettings.Compact;
     private bool _hudVisible = true;
     private Point _dragFromCursor;
     private Point _dragFromWindow;
@@ -41,6 +42,7 @@ public partial class MainWindow : Window
         InitializeComponent();
         _worker = new Thread(SensorLoop) { IsBackground = true, Name = "HeatLoad.Sensors" };
         ShowMode();
+        SetCompact(_compact);
 
         Loaded += (_, _) =>
         {
@@ -86,6 +88,26 @@ public partial class MainWindow : Window
     {
         ModeLabel.Text = _temperatureFirst ? "SICAKLIK" : "KULLANIM";
         TempItem.IsChecked = _temperatureFirst;
+    }
+
+    /// <summary>Compact card: the same three metrics as one slim row, without labels, bars or header.</summary>
+    private void SetCompact(bool compact)
+    {
+        _compact = compact;
+        AppSettings.Compact = compact;
+
+        FullHeader.Visibility = compact ? Visibility.Collapsed : Visibility.Visible;
+        FullBody.Visibility = compact ? Visibility.Collapsed : Visibility.Visible;
+        CompactBody.Visibility = compact ? Visibility.Visible : Visibility.Collapsed;
+
+        Root.Margin = compact ? new Thickness(14, 8, 14, 8) : new Thickness(18, 10, 18, 13);
+        Width = compact ? 236 : 382;
+        Height = compact ? 62 : 124;
+
+        ScaleGlyph.Text = compact ? "\uE740" : "\uE73F";
+        MiniScaleGlyph.Text = compact ? "\uE740" : "\uE73F";
+        ScaleButton.ToolTip = compact ? "Tam görünüme dön" : "Kompakt görünüme geç";
+        CompactItem.IsChecked = compact;
     }
 
     private void Place()
@@ -270,6 +292,10 @@ public partial class MainWindow : Window
     }
 
     private void Swap_Click(object sender, RoutedEventArgs e) => SetTemperatureFirst(!_temperatureFirst);
+
+    private void Scale_Click(object sender, RoutedEventArgs e) => SetCompact(!_compact);
+
+    private void CompactMode_Click(object sender, RoutedEventArgs e) => SetCompact(CompactItem.IsChecked);
 
     private void TempMode_Click(object sender, RoutedEventArgs e) => SetTemperatureFirst(TempItem.IsChecked);
 

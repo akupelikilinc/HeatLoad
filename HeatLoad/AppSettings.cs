@@ -21,6 +21,21 @@ internal static class AppSettings
         }
     }
 
+    /// <summary>Compact card: only the numbers, no labels or bars.</summary>
+    public static bool Compact
+    {
+        get
+        {
+            using var key = Registry.CurrentUser.OpenSubKey(KeyPath);
+            return key?.GetValue("Compact") is 1;
+        }
+        set
+        {
+            using var key = Registry.CurrentUser.CreateSubKey(KeyPath);
+            key.SetValue("Compact", value ? 1 : 0, RegistryValueKind.DWord);
+        }
+    }
+
     /// <summary>Where the user dragged the widget; null means "still above the clock".</summary>
     public static (int X, int Y)? Position
     {

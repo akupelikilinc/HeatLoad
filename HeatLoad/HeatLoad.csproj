@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -11,7 +11,7 @@
     <ApplicationIcon>app.ico</ApplicationIcon>
     <AssemblyName>HeatLoad</AssemblyName>
     <Product>HeatLoad</Product>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <!-- WFO0003: the manifest's PerMonitorV2 is what WPF needs; WinForms is only the tray icon. -->
     <NoWarn>$(NoWarn);WFO0003</NoWarn>
   </PropertyGroup>

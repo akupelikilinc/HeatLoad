@@ -14,6 +14,7 @@ A tiny always-on-top widget for Windows that shows live **CPU, GPU and RAM usage
 
 - **Live readings, once a second** — CPU load, GPU load, RAM load, plus CPU / GPU / RAM temperatures.
 - **Two views, one click** — press the ⇄ arrow to swap between usage and temperature. The big number follows the active view, the corner badge keeps the other one visible.
+- **Compact when you want quiet** — the ⤡ icon next to the arrow shrinks the card to a slim row with just the three numbers (colour-coded); ⤢ brings the full card back. The choice is remembered.
 - **Built for the corner** — frameless, always on top, never steals focus, no taskbar entry. Drag it anywhere; the spot is remembered.
 - **Tray resident** — left click toggles the widget, right click opens the menu.
 - **Same menu everywhere** — right click the widget or the tray icon: hide/show, switch view, settings, quit.
@@ -28,13 +29,17 @@ A tiny always-on-top widget for Windows that shows live **CPU, GPU and RAM usage
 
 **Right-click menu** — identical on the widget and on the tray icon.
 
-<img src="docs/menu.png" alt="Context menu" width="440">
+<img src="docs/menu.png" alt="Context menu" width="403">
 
 **Settings** — default view, start with Windows, hide the widget.
 
 <img src="docs/settings.png" alt="Settings window" width="330">
 
-> The interface is currently in Turkish. The menu is: *show/hide widget*, *show temperatures*, *settings…*, *quit*.
+**Compact view** — the ⤡ icon turns the card into a slim row with the three numbers only.
+
+<img src="docs/compact.png" alt="Compact view" width="236">
+
+> The interface is currently in Turkish. The menu is: *show/hide widget*, *show temperatures*, *compact view*, *settings…*, *quit*.
 
 ## Requirements
 
@@ -93,15 +98,16 @@ This stops the app, deletes the scheduled task, `C:\Program Files\HeatLoad` and 
 | Action | Result |
 |:--|:--|
 | Click ⇄ on the card | Swap the big value between usage and temperature |
+| Click ⤡ / ⤢ | Compact view (three numbers) / full card — remembered |
 | Drag the card | Move it anywhere on any monitor; it stays where you drop it |
-| Right click the card | Menu: hide/show, temperature view, settings, quit |
+| Right click the card | Menu: hide/show, temperature view, compact view, settings, quit |
 | Left click the tray icon | Show or hide the widget |
 | Right click the tray icon | The same menu |
 | Windows starts | Widget appears automatically, already elevated |
 
 The widget hides by moving off-screen, so nothing is left behind in the taskbar or Alt+Tab.
 
-The chosen view is remembered in `HKCU\Software\HeatLoad` (`Mode`: `0` = usage, `1` = temperature). The card's own position is stored there too (`X`, `Y`); with no saved position it sits above the clock again.
+The chosen view is remembered in `HKCU\Software\HeatLoad` (`Mode`: `0` = usage, `1` = temperature, `Compact`: `0` = full card, `1` = compact). The card's own position is stored there too (`X`, `Y`); with no saved position it sits above the clock again.
 
 ### Settings
 

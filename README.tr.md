@@ -14,6 +14,7 @@ Windows için, saatin hemen üstünde duran küçük bir masaüstü widget'ı: *
 
 - **Saniyede bir canlı veri** — CPU, GPU ve RAM kullanımı; CPU, GPU ve RAM sıcaklıkları.
 - **Tek tıkla iki görünüm** — ⇄ okuyla kullanım ile sıcaklık arasında geçiş. Büyük değer seçili görünümü izler, köşedeki rozet diğerini göstermeye devam eder.
+- **Sessiz kalmak istediğinde kompakt** — okun yanındaki ⤡ ikonu kartı yalnızca üç sayıdan (renk kodlu) oluşan ince bir şeride indirir; ⤢ tam kartı geri getirir. Seçim hatırlanır.
 - **Köşe için tasarlandı** — çerçevesiz, her zaman üstte, odağı çalmaz, görev çubuğunda yer kaplamaz. İstediğin yere sürükleyebilirsin; bıraktığın yeri hatırlar.
 - **Tepside yaşar** — sol tık göstergeyi açar/kapatır, sağ tık menüyü açar.
 - **Her yerde aynı menü** — göstergede veya tepsi simgesinde sağ tık: gizle/göster, görünüm değiştir, ayarlar, çıkış.
@@ -28,11 +29,15 @@ Windows için, saatin hemen üstünde duran küçük bir masaüstü widget'ı: *
 
 **Sağ tık menüsü** — göstergede ve tepsi simgesinde aynı.
 
-<img src="docs/menu.png" alt="Sağ tık menüsü" width="440">
+<img src="docs/menu.png" alt="Sağ tık menüsü" width="403">
 
 **Ayarlar** — varsayılan görünüm, açılışta başlat, göstergeyi kapat.
 
 <img src="docs/settings.png" alt="Ayarlar penceresi" width="330">
+
+**Kompakt görünüm** — ⤡ ikonu kartı yalnızca üç sayıdan oluşan ince bir şeride indirir.
+
+<img src="docs/compact.png" alt="Kompakt görünüm" width="236">
 
 ## Gereksinimler
 
@@ -91,15 +96,16 @@ Uygulamayı durdurur, zamanlanmış görevi, `C:\Program Files\HeatLoad` klasör
 | Eylem | Sonuç |
 |:--|:--|
 | Karttaki ⇄ | Büyük değeri kullanım ile sıcaklık arasında değiştirir |
+| Karttaki ⤡ / ⤢ | Kompakt görünüm (üç sayı) / tam kart — hatırlanır |
 | Kartı sürükle | İstediğin yere, istediğin monitöre taşır; bıraktığın yerde kalır |
-| Karta sağ tık | Menü: gizle/göster, sıcaklık görünümü, ayarlar, çıkış |
+| Karta sağ tık | Menü: gizle/göster, sıcaklık görünümü, kompakt görünüm, ayarlar, çıkış |
 | Tepsi simgesine sol tık | Göstergeyi gösterir veya gizler |
 | Tepsi simgesine sağ tık | Aynı menü |
 | Windows açılışı | Gösterge kendiliğinden, yönetici olarak gelir |
 
 Gösterge ekran dışına taşınarak gizlenir; görev çubuğunda veya Alt+Tab listesinde iz bırakmaz.
 
-Seçilen görünüm `HKCU\Software\HeatLoad` altında saklanır (`Mode`: `0` = kullanım, `1` = sıcaklık). Kartın konumu da aynı yerde tutulur (`X`, `Y`); kayıtlı konum yoksa saat üstündeki varsayılan yere döner.
+Seçilen görünüm `HKCU\Software\HeatLoad` altında saklanır (`Mode`: `0` = kullanım, `1` = sıcaklık, `Compact`: `0` = tam kart, `1` = kompakt). Kartın konumu da aynı yerde tutulur (`X`, `Y`); kayıtlı konum yoksa saat üstündeki varsayılan yere döner.
 
 ### Ayarlar
 
