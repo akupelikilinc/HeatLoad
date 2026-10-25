@@ -4,9 +4,9 @@ Her sürümün değişiklikleri, ekran görüntüleriyle birlikte. Görseller o 
 
 | Sürüm | Tarih | Özet |
 |:--|:--|:--|
-| [1.2.0](#120--25102026--kompakt-görünüm--compact-view) | 25.10.2026 | Kompakt görünüm (⤡ / ⤢) |
-| [1.1.0](#110--25102026--taşınabilir-gösterge--movable-widget) | 25.10.2026 | Kart taşınabilir, konum hatırlanır |
-| [1.0.0](#100--25102026--i̇lk-sürüm--initial-release) | 25.10.2026 | İlk sürüm: kullanım + sıcaklık, tepsi, kurulum |
+| **1.2.0** | 25.10.2026 | Kompakt görünüm (⤡ / ⤢) |
+| **1.1.0** | 25.10.2026 | Kart taşınabilir, konum hatırlanır |
+| **1.0.0** | 25.10.2026 | İlk sürüm: kullanım + sıcaklık, tepsi, kurulum |
 
 ---
 
