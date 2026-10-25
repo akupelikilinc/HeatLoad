@@ -14,7 +14,7 @@ A tiny always-on-top widget for Windows that shows live **CPU, GPU and RAM usage
 
 - **Live readings, once a second** — CPU load, GPU load, RAM load, plus CPU / GPU / RAM temperatures.
 - **Two views, one click** — press the ⇄ arrow to swap between usage and temperature. The big number follows the active view, the corner badge keeps the other one visible.
-- **Built for the corner** — frameless, always on top, never steals focus, no taskbar entry.
+- **Built for the corner** — frameless, always on top, never steals focus, no taskbar entry. Drag it anywhere; the spot is remembered.
 - **Tray resident** — left click toggles the widget, right click opens the menu.
 - **Same menu everywhere** — right click the widget or the tray icon: hide/show, switch view, settings, quit.
 - **Starts with Windows** — via a scheduled task with highest privileges, so temperatures work at logon with no UAC prompt.
@@ -48,7 +48,7 @@ A tiny always-on-top widget for Windows that shows live **CPU, GPU and RAM usage
 
 ### Setup.exe (no SDK needed)
 
-Download **[HeatLoad-Setup-1.0.0.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** and run it. It is a 51 MB self-contained installer — no .NET runtime, no PowerShell script, no SDK.
+Download **[HeatLoad-Setup-1.1.0.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** and run it. It is a 51 MB self-contained installer — no .NET runtime, no PowerShell script, no SDK.
 
 It installs to `C:\Program Files\HeatLoad`, registers the logon task, adds Start-menu entries and appears in *Apps & features* for uninstalling. Only the .NET-free build and PawnIO (see Requirements) are needed.
 
@@ -93,6 +93,7 @@ This stops the app, deletes the scheduled task, `C:\Program Files\HeatLoad` and 
 | Action | Result |
 |:--|:--|
 | Click ⇄ on the card | Swap the big value between usage and temperature |
+| Drag the card | Move it anywhere on any monitor; it stays where you drop it |
 | Right click the card | Menu: hide/show, temperature view, settings, quit |
 | Left click the tray icon | Show or hide the widget |
 | Right click the tray icon | The same menu |
@@ -100,7 +101,7 @@ This stops the app, deletes the scheduled task, `C:\Program Files\HeatLoad` and 
 
 The widget hides by moving off-screen, so nothing is left behind in the taskbar or Alt+Tab.
 
-The chosen view is remembered in `HKCU\Software\HeatLoad` (`Mode`: `0` = usage, `1` = temperature).
+The chosen view is remembered in `HKCU\Software\HeatLoad` (`Mode`: `0` = usage, `1` = temperature). The card's own position is stored there too (`X`, `Y`); with no saved position it sits above the clock again.
 
 ### Settings
 

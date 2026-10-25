@@ -11,7 +11,11 @@
         TextOptions.TextRenderingMode="ClearType">
 
     <Grid>
-        <Border x:Name="Card" Margin="10" CornerRadius="20" BorderThickness="1" BorderBrush="#1CFFFFFF">
+        <Border x:Name="Card" Margin="10" CornerRadius="20" BorderThickness="1" BorderBrush="#1CFFFFFF"
+                Cursor="SizeAll"
+                MouseLeftButtonDown="Card_MouseLeftButtonDown"
+                MouseMove="Card_MouseMove"
+                MouseLeftButtonUp="Card_MouseLeftButtonUp">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Color="#F0151923" Offset="0" />

@@ -20,4 +20,28 @@ internal static class AppSettings
             key.SetValue("Mode", value ? 1 : 0, RegistryValueKind.DWord);
         }
     }
+
+    /// <summary>Where the user dragged the widget; null means "still above the clock".</summary>
+    public static (int X, int Y)? Position
+    {
+        get
+        {
+            using var key = Registry.CurrentUser.OpenSubKey(KeyPath);
+            return key?.GetValue("X") is int x && key.GetValue("Y") is int y ? (x, y) : null;
+        }
+        set
+        {
+            using var key = Registry.CurrentUser.CreateSubKey(KeyPath);
+            if (value is { } p)
+            {
+                key.SetValue("X", p.X, RegistryValueKind.DWord);
+                key.SetValue("Y", p.Y, RegistryValueKind.DWord);
+            }
+            else
+            {
+                key.DeleteValue("X", false);
+                key.DeleteValue("Y", false);
+            }
+        }
+    }
 }

@@ -14,7 +14,7 @@ Windows için, saatin hemen üstünde duran küçük bir masaüstü widget'ı: *
 
 - **Saniyede bir canlı veri** — CPU, GPU ve RAM kullanımı; CPU, GPU ve RAM sıcaklıkları.
 - **Tek tıkla iki görünüm** — ⇄ okuyla kullanım ile sıcaklık arasında geçiş. Büyük değer seçili görünümü izler, köşedeki rozet diğerini göstermeye devam eder.
-- **Köşe için tasarlandı** — çerçevesiz, her zaman üstte, odağı çalmaz, görev çubuğunda yer kaplamaz.
+- **Köşe için tasarlandı** — çerçevesiz, her zaman üstte, odağı çalmaz, görev çubuğunda yer kaplamaz. İstediğin yere sürükleyebilirsin; bıraktığın yeri hatırlar.
 - **Tepside yaşar** — sol tık göstergeyi açar/kapatır, sağ tık menüyü açar.
 - **Her yerde aynı menü** — göstergede veya tepsi simgesinde sağ tık: gizle/göster, görünüm değiştir, ayarlar, çıkış.
 - **Windows ile başlar** — en yüksek yetkili zamanlanmış görev sayesinde açılışta UAC sormadan, sıcaklıklar çalışır hâlde başlar.
@@ -46,7 +46,7 @@ Windows için, saatin hemen üstünde duran küçük bir masaüstü widget'ı: *
 
 ### Setup.exe (SDK gerekmez)
 
-**[HeatLoad-Setup-1.0.0.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** dosyasını indirip çalıştırın. 51 MB'lık kendinden içerikli kurulum paketi — .NET çalışma zamanı, PowerShell betiği veya SDK gerekmez.
+**[HeatLoad-Setup-1.1.0.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** dosyasını indirip çalıştırın. 51 MB'lık kendinden içerikli kurulum paketi — .NET çalışma zamanı, PowerShell betiği veya SDK gerekmez.
 
 `C:\Program Files\HeatLoad` altına kurar, açılış görevini oluşturur, başlat menüsüne kısayol ekler ve *Uygulamalar ve özellikler* listesine yazılır. Tek ek gereksinim PawnIO (bkz. Gereksinimler).
 
@@ -91,6 +91,7 @@ Uygulamayı durdurur, zamanlanmış görevi, `C:\Program Files\HeatLoad` klasör
 | Eylem | Sonuç |
 |:--|:--|
 | Karttaki ⇄ | Büyük değeri kullanım ile sıcaklık arasında değiştirir |
+| Kartı sürükle | İstediğin yere, istediğin monitöre taşır; bıraktığın yerde kalır |
 | Karta sağ tık | Menü: gizle/göster, sıcaklık görünümü, ayarlar, çıkış |
 | Tepsi simgesine sol tık | Göstergeyi gösterir veya gizler |
 | Tepsi simgesine sağ tık | Aynı menü |
@@ -98,7 +99,7 @@ Uygulamayı durdurur, zamanlanmış görevi, `C:\Program Files\HeatLoad` klasör
 
 Gösterge ekran dışına taşınarak gizlenir; görev çubuğunda veya Alt+Tab listesinde iz bırakmaz.
 
-Seçilen görünüm `HKCU\Software\HeatLoad` altında saklanır (`Mode`: `0` = kullanım, `1` = sıcaklık).
+Seçilen görünüm `HKCU\Software\HeatLoad` altında saklanır (`Mode`: `0` = kullanım, `1` = sıcaklık). Kartın konumu da aynı yerde tutulur (`X`, `Y`); kayıtlı konum yoksa saat üstündeki varsayılan yere döner.
 
 ### Ayarlar
 

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -23,6 +24,9 @@ public partial class MainWindow : Window
     private Reading _last;
     private bool _temperatureFirst = AppSettings.TemperatureFirst;
     private bool _hudVisible = true;
+    private Point _dragFromCursor;
+    private Point _dragFromWindow;
+    private bool _dragging;
 
     private static readonly Brush Normal = Frozen(0xF2, 0xF6, 0xFC);
     private static readonly Brush Muted = Frozen(0x9A, 0xA4, 0xB3);
@@ -87,9 +91,69 @@ public partial class MainWindow : Window
     private void Place()
     {
         if (!_hudVisible) return;
+
+        // Dragged by the user before: stay there, as long as that spot is still on a screen.
+        if (AppSettings.Position is { } saved && OnScreen(saved.X, saved.Y))
+        {
+            Left = saved.X;
+            Top = saved.Y;
+            return;
+        }
+
         var work = SystemParameters.WorkArea;
         Left = Math.Round(work.Right - ActualWidth - 10);
         Top = Math.Round(work.Bottom - ActualHeight - 8);
+    }
+
+    /// <summary>True when enough of the card is visible to grab it back after a monitor change.</summary>
+    private bool OnScreen(double x, double y)
+    {
+        var width = ActualWidth > 0 ? ActualWidth : Width;
+        var height = ActualHeight > 0 ? ActualHeight : Height;
+        var visible = Rect.Intersect(
+            new Rect(SystemParameters.VirtualScreenLeft, SystemParameters.VirtualScreenTop,
+                     SystemParameters.VirtualScreenWidth, SystemParameters.VirtualScreenHeight),
+            new Rect(x, y, width, height));
+        return visible.Width >= 120 && visible.Height >= 40;
+    }
+
+    private void Card_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        // No capture yet: a plain click still has to reach the swap arrow and the menu.
+        _dragFromCursor = PointToScreen(e.GetPosition(this));
+        _dragFromWindow = new Point(Left, Top);
+        _dragging = false;
+    }
+
+    private void Card_MouseMove(object sender, MouseEventArgs e)
+    {
+        if (e.LeftButton != MouseButtonState.Pressed) return;
+
+        var now = PointToScreen(e.GetPosition(this));
+        var dx = now.X - _dragFromCursor.X;
+        var dy = now.Y - _dragFromCursor.Y;
+
+        // Small movements stay clicks, so the arrow button keeps working.
+        if (!_dragging && Math.Abs(dx) < 4 && Math.Abs(dy) < 4) return;
+
+        if (!_dragging)
+        {
+            _dragging = true;
+            Card.CaptureMouse();
+        }
+
+        Left = Math.Round(_dragFromWindow.X + dx);
+        Top = Math.Round(_dragFromWindow.Y + dy);
+    }
+
+    private void Card_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        if (!_dragging) return;
+
+        _dragging = false;
+        Card.ReleaseMouseCapture();
+        AppSettings.Position = ((int)Math.Round(Left), (int)Math.Round(Top));
+        e.Handled = true; // the drop must not also count as a click on whatever is under the cursor
     }
 
     private void FadeIn()
