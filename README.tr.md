@@ -35,12 +35,22 @@ Windows için, saatin hemen üstünde duran küçük bir masaüstü widget'ı: *
 ## Gereksinimler
 
 - Windows 10 veya 11, 64 bit
-- [.NET 10 SDK](https://dotnet.microsoft.com/download) (derlemek için; yayımlanmış klasör yalnızca .NET 10 Desktop Runtime ister)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download) — yalnızca kaynaktan kurulumda gerekir; Setup.exe kendinden içerikli
 - Yönetici yetkisi — Windows, CPU ve anakart sıcaklık sensörlerini normal süreçlere açmaz
 - [PawnIO](https://pawnio.eu/) — LibreHardwareMonitor'ün yeni AMD işlemcilerde sensör okumak için kullandığı düşük seviyeli sürücü (bir kez kurulur, tek UAC onayı ister)
 - NVIDIA ekran kartı sıcaklığı NVML'den gelir; güncel bir GeForce sürücüsü yeterlidir (AMD ekran kartı sıcaklığı henüz okunmuyor)
 
 ## Kurulum
+
+### Setup.exe (SDK gerekmez)
+
+**[HeatLoad-Setup-1.0.0.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** dosyasını indirip çalıştırın. 51 MB'lık kendinden içerikli kurulum paketi — .NET çalışma zamanı, PowerShell betiği veya SDK gerekmez.
+
+`C:\Program Files\HeatLoad` altına kurar, açılış görevini oluşturur, başlat menüsüne kısayol ekler ve *Uygulamalar ve özellikler* listesine yazılır. Tek ek gereksinim PawnIO (bkz. Gereksinimler).
+
+> Kurulum paketi kod imzalı olmadığı için SmartScreen uyarabilir: *Daha fazla bilgi* → *Yine de çalıştır*.
+
+### Kaynaktan
 
 Depoyu klonlayın ve kurulum betiğini çalıştırın. Uygulamayı derler, `C:\Program Files\HeatLoad` altına kopyalar ve açılış görevini ekler.
 
@@ -65,6 +75,8 @@ dotnet run --project .\HeatLoad
 Yönetici yetkisi olmadan da açılır, ancak sıcaklıklar `0` görünür.
 
 ### Kaldırma
+
+Setup.exe ile kurduysanız *Ayarlar → Uygulamalar → Yüklü uygulamalar → HeatLoad* üzerinden kaldırın. Kurulum betiğiyle kurduysanız:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
@@ -148,7 +160,18 @@ HeatLoad/
 install.ps1                    Program Files'a yayımla + açılış görevi
 uninstall.ps1                  Görevi, dosyaları, ayarları sil
 make-icon.ps1                  app.ico yeniden üretimi
+installer/HeatLoad.iss         HeatLoad-Setup.exe için Inno Setup betiği
 ```
+
+## Kurulum paketini üretmek
+
+```powershell
+dotnet publish HeatLoad -c Release -r win-x64 --self-contained true -o publish-selfcontained `
+  -p:SatelliteResourceLanguages=en -p:DebugType=None -p:DebugSymbols=false
+& "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" installer\HeatLoad.iss
+```
+
+Paket `dist\` altında oluşur. Kendinden içerikli yayını (hedef makinede .NET çalışma zamanı gerekmez), açılış görevini ve kaldırıcıyı içerir.
 
 ## Lisans
 

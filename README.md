@@ -37,12 +37,22 @@ A tiny always-on-top widget for Windows that shows live **CPU, GPU and RAM usage
 ## Requirements
 
 - Windows 10 or 11, 64-bit
-- [.NET 10 SDK](https://dotnet.microsoft.com/download) (to build; the published folder only needs the .NET 10 Desktop Runtime)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download) — only when installing from source; the Setup.exe build is self-contained
 - Administrator rights — Windows does not expose CPU/board temperature sensors to normal processes
 - [PawnIO](https://pawnio.eu/) — the low-level driver LibreHardwareMonitor uses to read sensors on modern AMD CPUs (install it once; it asks for a single UAC confirmation)
 - NVIDIA GPU temperatures come from NVML, so any recent GeForce driver is enough (AMD GPU temperatures are not read yet)
 
 ## Install
+
+### Setup.exe (no SDK needed)
+
+Download **[HeatLoad-Setup-1.0.0.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** and run it. It is a 51 MB self-contained installer — no .NET runtime, no PowerShell script, no SDK.
+
+It installs to `C:\Program Files\HeatLoad`, registers the logon task, adds Start-menu entries and appears in *Apps & features* for uninstalling. Only the .NET-free build and PawnIO (see Requirements) are needed.
+
+> Windows SmartScreen may warn because the installer is not code-signed: *More info* → *Run anyway*.
+
+### From source
 
 Clone the repository and run the install script. It builds the app, copies it to `C:\Program Files\HeatLoad` and registers the logon task.
 
@@ -67,6 +77,8 @@ dotnet run --project .\HeatLoad
 Without administrator rights the app still runs, but temperatures read as `0`.
 
 ### Uninstall
+
+Installed with Setup.exe? Remove it from *Settings → Apps → Installed apps → HeatLoad*. Otherwise:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
@@ -150,7 +162,18 @@ HeatLoad/
 install.ps1                    Publish to Program Files + logon task
 uninstall.ps1                  Remove task, files, settings
 make-icon.ps1                  Regenerate app.ico
+installer/HeatLoad.iss         Inno Setup script for HeatLoad-Setup.exe
 ```
+
+## Building the installer
+
+```powershell
+dotnet publish HeatLoad -c Release -r win-x64 --self-contained true -o publish-selfcontained `
+  -p:SatelliteResourceLanguages=en -p:DebugType=None -p:DebugSymbols=false
+& "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" installer\HeatLoad.iss
+```
+
+The Setup lands in `dist\`. It bundles the self-contained publish (no .NET runtime needed on the target), plus the logon task and the uninstaller.
 
 ## License
 
