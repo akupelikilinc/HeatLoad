@@ -18,7 +18,10 @@ Stop-Process -Name HeatLoad -Force -ErrorAction SilentlyContinue
 Start-Sleep -Milliseconds 400
 
 Write-Host 'Derleniyor...'
-dotnet publish $project -c Release -o $dest --nologo | Out-Null
+# Setup.exe ile aynı çıktı: kendinden içerikli, .NET çalışma zamanı gerektirmez. Eski dosyalar temizlenir.
+Remove-Item $dest -Recurse -Force -ErrorAction SilentlyContinue
+dotnet publish $project -c Release -r win-x64 --self-contained true -o $dest `
+    -p:SatelliteResourceLanguages=en -p:DebugType=None -p:DebugSymbols=false --nologo | Out-Null
 
 $action = New-ScheduledTaskAction -Execute (Join-Path $dest 'HeatLoad.exe')
 $trigger = New-ScheduledTaskTrigger -AtLogOn -User "$env:USERDOMAIN\$env:USERNAME"

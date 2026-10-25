@@ -4,6 +4,8 @@
 
 A tiny always-on-top widget for Windows that shows live **CPU, GPU and RAM usage and temperature**, sitting right above the clock. No window chrome, no taskbar button — just a dark glass card and a tray icon.
 
+**[Download HeatLoad-Setup.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** — Windows 10/11, 51 MB, no .NET runtime needed.
+
 <p>
   <img src="docs/usage.png" alt="HeatLoad in usage mode" width="382">
 </p>

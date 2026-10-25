@@ -4,6 +4,8 @@
 
 Windows için, saatin hemen üstünde duran küçük bir masaüstü widget'ı: **CPU, GPU ve RAM kullanımı ile sıcaklıklarını** canlı gösterir. Pencere çerçevesi yok, görev çubuğu düğmesi yok — sadece koyu cam görünümlü bir kart ve bir tepsi simgesi.
 
+**[HeatLoad-Setup.exe indir](https://github.com/akupelikilinc/HeatLoad/releases/latest)** — Windows 10/11, 51 MB, .NET çalışma zamanı gerekmez.
+
 <p>
   <img src="docs/usage.png" alt="HeatLoad kullanım görünümü" width="382">
 </p>
