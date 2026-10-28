@@ -2,7 +2,7 @@
 ; Uygulama Program Files'a kurulur ve açılışta yönetici olarak başlayan görevi oluşturur.
 
 #define AppName "HeatLoad"
-#define AppVersion "1.2.1"
+#define AppVersion "1.3.0"
 #define AppPublisher "Ahmet KÜPELİKILINÇ"
 #define AppURL "https://github.com/akupelikilinc/HeatLoad"
 
@@ -25,7 +25,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0.17763
 OutputDir=..\dist
 OutputBaseFilename=HeatLoad-Setup-{#AppVersion}
-SetupIconFile=..\HeatLoad\app.ico
+SetupIconFile=..\HeatLoad.App\Assets\app.ico
 UninstallDisplayIcon={app}\{#AppName}.exe
 UninstallDisplayName={#AppName}
 LicenseFile=..\LICENSE
@@ -34,7 +34,7 @@ SolidCompression=yes
 WizardStyle=modern
 SetupLogging=yes
 CloseApplications=no
-; Kullanıcı ayarı (Mode) korunur: kurulum sırasında HKCU anahtarına dokunulmaz.
+; Kullanıcı ayarı (settings.json) korunur: kurulum sırasında %APPDATA%\HeatLoad klasörüne dokunulmaz.
 
 [Languages]
 Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
@@ -60,6 +60,7 @@ Filename: "{sys}\reg.exe"; Parameters: "delete HKCU\Software\{#AppName} /f"; Fla
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{app}"
+Type: filesandordirs; Name: "{userappdata}\HeatLoad"
 
 [Code]
 var

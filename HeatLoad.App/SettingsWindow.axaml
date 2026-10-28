@@ -1,0 +1,100 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="HeatLoad.SettingsWindow"
+        Title="HeatLoad Ayarlar" Width="330" Height="264"
+        Icon="avares://HeatLoad/Assets/app.png"
+        SystemDecorations="None" TransparencyLevelHint="Transparent" Background="Transparent"
+        TransparencyBackgroundFallback="#0B0E14"
+        CanResize="False" WindowStartupLocation="Manual"
+        ShowInTaskbar="False" Topmost="True" ShowActivated="True"
+        FontFamily="Segoe UI Variable Text, Segoe UI, Inter">
+
+    <Grid>
+        <Border x:Name="Card" Margin="14" CornerRadius="16" BorderThickness="1" BorderBrush="#1CFFFFFF"
+                BoxShadow="0 0 20 0 #8C000000"
+                PointerPressed="Card_PointerPressed">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                    <GradientStop Color="#F0141821" Offset="0" />
+                    <GradientStop Color="#F0090B10" Offset="1" />
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid Margin="18,14,18,16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="HeatLoad" FontSize="13" FontWeight="SemiBold" Foreground="#EDF2F9" />
+                        <TextBlock Text="Ayarlar" FontSize="11" Foreground="#6E7788" Margin="8,0,0,0"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                    <Button x:Name="CloseButton" Click="Close_Click" Cursor="Hand" Width="20" Height="20" Focusable="False"
+                            HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip.Tip="Kapat (Esc)">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Border x:Name="Bg" CornerRadius="10" Background="Transparent">
+                                    <TextBlock Text="✕" FontSize="10" Foreground="#8A93A3"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.Styles>
+                            <Style Selector="Button:pointerover /template/ Border#Bg">
+                                <Setter Property="Background" Value="#24FFFFFF" />
+                            </Style>
+                        </Button.Styles>
+                    </Button>
+                </Grid>
+
+                <StackPanel Grid.Row="1" Margin="0,17,0,0">
+                    <TextBlock Text="BÜYÜK DEĞER" Classes="caption" />
+                    <Border Background="#12FFFFFF" CornerRadius="9" Padding="3" Margin="0,7,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <RadioButton x:Name="UsageSegment" Grid.Column="0" Content="Kullanım" GroupName="mode" Focusable="False"
+                                         Classes="segment" Click="Mode_Click" />
+                            <RadioButton x:Name="TempSegment" Grid.Column="1" Content="Sıcaklık" GroupName="mode" Focusable="False"
+                                         Classes="segment" Click="Mode_Click" />
+                        </Grid>
+                    </Border>
+
+                    <TextBlock Text="AÇILIŞ" Classes="caption" Margin="0,17,0,0" />
+                    <Grid Margin="0,10,0,0">
+                        <TextBlock Text="Açılışta başlat" FontSize="12" Foreground="#C9D2DF" VerticalAlignment="Center" />
+                        <CheckBox x:Name="StartSwitch" Classes="switch" HorizontalAlignment="Right"
+                                  VerticalAlignment="Center" Click="Start_Click" Focusable="False" />
+                    </Grid>
+                    <TextBlock x:Name="StartError" Text="Açılış ayarı değiştirilemedi." FontSize="10"
+                               Foreground="#F2C16B" IsVisible="False" Margin="0,6,0,0" />
+                </StackPanel>
+
+                <Button x:Name="QuitButton" Grid.Row="2" Click="Quit_Click" Cursor="Hand" Height="32" Focusable="False" HorizontalAlignment="Stretch">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border x:Name="Bg" CornerRadius="8" Background="#14FFFFFF" BorderBrush="#1CFFFFFF"
+                                    BorderThickness="1">
+                                <ContentPresenter Content="{TemplateBinding Content}"
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ Border#Bg">
+                            <Setter Property="Background" Value="#22FFFFFF" />
+                        </Style>
+                    </Button.Styles>
+                    <TextBlock Text="Göstergeyi kapat" FontSize="11.5" FontWeight="SemiBold" Foreground="#C9D2DF" />
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
+

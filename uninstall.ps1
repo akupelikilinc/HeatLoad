@@ -15,5 +15,6 @@ Stop-Process -Name HeatLoad -Force -ErrorAction SilentlyContinue
 Unregister-ScheduledTask -TaskName 'HeatLoad' -Confirm:$false -ErrorAction SilentlyContinue
 Remove-Item (Join-Path $env:ProgramFiles 'HeatLoad') -Recurse -Force -ErrorAction SilentlyContinue
 Remove-Item 'HKCU:\Software\HeatLoad' -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item (Join-Path $env:APPDATA 'HeatLoad') -Recurse -Force -ErrorAction SilentlyContinue
 
 Write-Host 'HeatLoad kaldırıldı. (PawnIO sürücüsü kurulu bırakıldı.)'

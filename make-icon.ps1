@@ -64,7 +64,7 @@ for ($i = 0; $i -lt $sizes.Count; $i++) {
 foreach ($p in $pngs) { $bw.Write($p) }
 $bw.Flush()
 
-$target = Join-Path $PSScriptRoot 'HeatLoad\app.ico'
+$target = Join-Path $PSScriptRoot 'HeatLoad.App\Assets\app.ico'
 [System.IO.File]::WriteAllBytes($target, $out.ToArray())
 $bw.Dispose(); $out.Dispose()
 

@@ -4,10 +4,25 @@ Her sürümün değişiklikleri, ekran görüntüleriyle birlikte. Görseller o 
 
 | Sürüm | Tarih | Özet |
 |:--|:--|:--|
+| **1.3.0** | 28.10.2026 | Linux ve macOS sürümleri (Avalonia) |
 | **1.2.1** | 28.10.2026 | Gösterge gerçekten en üstte kalıyor |
 | **1.2.0** | 25.10.2026 | Kompakt görünüm (⤡ / ⤢) |
 | **1.1.0** | 25.10.2026 | Kart taşınabilir, konum hatırlanır |
 | **1.0.0** | 25.10.2026 | İlk sürüm: kullanım + sıcaklık, tepsi, kurulum |
+
+---
+
+## 1.3.0 — 28.10.2026 — Linux ve macOS / Linux and macOS
+
+- Arayüz Avalonia'ya taşındı: tek kod tabanından Windows, Linux ve macOS derlemeleri.
+- **Linux:** CPU `/proc/stat`, RAM `/proc/meminfo`, sıcaklıklar `/sys/class/hwmon`, NVIDIA GPU NVML, AMD GPU yükü `amdgpu` sysfs.
+- **macOS:** CPU `host_statistics`, RAM sysctl. Sıcaklık ve GPU yükü henüz yok (SMC/IOKit ek yetki gerektiriyor) — alanlar `—` kalır.
+- Ayarlar kayıt defterinden JSON'a taşındı: `%APPDATA%\HeatLoad\settings.json`, `~/.config/HeatLoad/settings.json`, `~/Library/Application Support/HeatLoad/settings.json`. Eski HKCU değerleri okunmaz.
+- Otomatik başlatma: Windows'ta `schtasks` görevi, Linux'ta XDG autostart, macOS'ta launch agent.
+- GitHub Actions ile dört derleme: `HeatLoad-linux-x64.tar.gz`, `HeatLoad-macos-arm64.tar.gz`, `HeatLoad-macos-x64.tar.gz`, Windows Setup.
+- **EN:** The UI moved to Avalonia, so one codebase now ships Windows, Linux and macOS builds; settings live in a per-OS JSON file and macOS has no temperatures or GPU load yet.
+
+[Release v1.3.0](https://github.com/akupelikilinc/HeatLoad/releases/tag/v1.3.0)
 
 ---
 

@@ -11,7 +11,7 @@ if (-not $isAdmin) {
     exit
 }
 
-$project = Join-Path $PSScriptRoot 'HeatLoad'
+$project = Join-Path $PSScriptRoot 'HeatLoad.App'
 $dest = Join-Path $env:ProgramFiles 'HeatLoad'
 
 Stop-Process -Name HeatLoad -Force -ErrorAction SilentlyContinue

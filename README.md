@@ -2,9 +2,9 @@
 
 **English** · [Türkçe](README.tr.md)
 
-A tiny always-on-top widget for Windows that shows live **CPU, GPU and RAM usage and temperature**, sitting right above the clock. No window chrome, no taskbar button — just a dark glass card and a tray icon.
+A tiny always-on-top widget for **Windows, Linux and macOS** that shows live **CPU, GPU and RAM usage and temperature**, sitting right above the clock. No window chrome, no taskbar button — just a dark glass card and a tray icon.
 
-**[Download HeatLoad-Setup.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** — Windows 10/11, 51 MB, no .NET runtime needed.
+**[Download](https://github.com/akupelikilinc/HeatLoad/releases/latest)** — `HeatLoad-Setup.exe` for Windows 10/11, `.tar.gz` archives for Linux (x64) and macOS (Apple Silicon / Intel). No .NET runtime needed.
 
 <p>
   <img src="docs/usage.png" alt="HeatLoad in usage mode" width="382">
@@ -18,8 +18,8 @@ A tiny always-on-top widget for Windows that shows live **CPU, GPU and RAM usage
 - **Built for the corner** — frameless, always on top, never steals focus, no taskbar entry. Drag it anywhere; the spot is remembered.
 - **Tray resident** — left click toggles the widget, right click opens the menu.
 - **Same menu everywhere** — right click the widget or the tray icon: hide/show, switch view, settings, quit.
-- **Starts with Windows** — via a scheduled task with highest privileges, so temperatures work at logon with no UAC prompt.
-- **No network, no telemetry** — every value is read locally through Win32, NVML and LibreHardwareMonitor.
+- **Starts with your session** — Windows: a scheduled task with highest privileges, so temperatures work at logon with no UAC prompt. Linux: an XDG autostart entry. macOS: a launch agent.
+- **No network, no telemetry** — every value is read locally: Win32, NVML and LibreHardwareMonitor on Windows, `/proc` and hwmon on Linux, Mach/sysctl on macOS.
 
 ## Screenshots
 
@@ -45,21 +45,51 @@ Every release, with its own screenshots: **[CHANGELOG.md](CHANGELOG.md)**.
 
 ## Requirements
 
+**Windows**
+
 - Windows 10 or 11, 64-bit
-- [.NET 10 SDK](https://dotnet.microsoft.com/download) — only when installing from source; the Setup.exe build is self-contained
 - Administrator rights — Windows does not expose CPU/board temperature sensors to normal processes
 - [PawnIO](https://pawnio.eu/) — the low-level driver LibreHardwareMonitor uses to read sensors on modern AMD CPUs (install it once; it asks for a single UAC confirmation)
-- NVIDIA GPU temperatures come from NVML, so any recent GeForce driver is enough (AMD GPU temperatures are not read yet)
+- NVIDIA GPU load and temperature come from NVML, so any recent GeForce driver is enough
+
+**Linux**
+
+- x64, glibc 2.31+ (Ubuntu 20.04 or newer, Fedora 32+, …)
+- CPU and RAM need nothing extra; CPU/GPU temperatures are read from `/sys/class/hwmon` (kernel drivers such as `coretemp`, `k10temp`, `amdgpu`)
+- NVIDIA GPU load/temperature use `libnvidia-ml.so.1` from the driver; AMD GPU load uses the `amdgpu` sysfs node
+
+**macOS**
+
+- macOS 12+, Apple Silicon or Intel
+- CPU and RAM work out of the box. Temperatures and GPU load are not available yet: macOS exposes them only through SMC/IOKit, which needs extra privileged plumbing — those fields stay `—`
+
+**.NET 10 SDK** — only when building from source; the release builds are self-contained
 
 ## Install
 
-### Setup.exe (no SDK needed)
+### Setup.exe (Windows, no SDK needed)
 
-Download **[HeatLoad-Setup-1.1.0.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** and run it. It is a 51 MB self-contained installer — no .NET runtime, no PowerShell script, no SDK.
+Download **[HeatLoad-Setup.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** and run it. It is a 51 MB self-contained installer — no .NET runtime, no PowerShell script, no SDK.
 
 It installs to `C:\Program Files\HeatLoad`, registers the logon task, adds Start-menu entries and appears in *Apps & features* for uninstalling. Only the .NET-free build and PawnIO (see Requirements) are needed.
 
 > Windows SmartScreen may warn because the installer is not code-signed: *More info* → *Run anyway*.
+
+### Linux / macOS (archives)
+
+Download the archive for your machine, unpack it and run `HeatLoad`:
+
+```bash
+# Linux
+tar -xzf HeatLoad-linux-x64.tar.gz
+./HeatLoad
+
+# macOS (Apple Silicon: HeatLoad-macos-arm64, Intel: HeatLoad-macos-x64)
+tar -xzf HeatLoad-macos-arm64.tar.gz
+open HeatLoad.app
+```
+
+The macOS build is not notarized: the first start needs *right click → Open*, or `xattr -dr com.apple.quarantine HeatLoad.app`.
 
 ### From source
 
@@ -80,10 +110,14 @@ The script elevates itself, publishes the project, registers the scheduled task 
 Useful while developing — starts the app from the build output, no scheduled task:
 
 ```powershell
-dotnet run --project .\HeatLoad
+# Windows
+dotnet run --project .\HeatLoad.App
+
+# Linux / macOS
+dotnet run --project HeatLoad.App
 ```
 
-Without administrator rights the app still runs, but temperatures read as `0`.
+Without administrator rights on Windows the app still runs, but temperatures read as `0`.
 
 ### Uninstall
 
@@ -93,7 +127,16 @@ Installed with Setup.exe? Remove it from *Settings → Apps → Installed apps �
 powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
 ```
 
-This stops the app, deletes the scheduled task, `C:\Program Files\HeatLoad` and the `HKCU\Software\HeatLoad` settings key. The PawnIO driver is left installed — remove it from *Apps & features* if you do not need it.
+This stops the app, deletes the scheduled task, `C:\Program Files\HeatLoad`, the `HKCU\Software\HeatLoad` key (older versions) and the settings file. The PawnIO driver is left installed — remove it from *Apps & features* if you do not need it.
+
+On Linux/macOS remove `HeatLoad.app` (or the `HeatLoad` binary) and, if you enabled it, the autostart entry:
+
+```bash
+# Linux
+rm -f ~/.config/autostart/heatload.desktop
+# macOS
+rm -f ~/Library/LaunchAgents/com.heatload.HeatLoad.plist
+```
 
 ## Usage
 
@@ -105,18 +148,18 @@ This stops the app, deletes the scheduled task, `C:\Program Files\HeatLoad` and 
 | Right click the card | Menu: hide/show, temperature view, compact view, settings, quit |
 | Left click the tray icon | Show or hide the widget |
 | Right click the tray icon | The same menu |
-| Windows starts | Widget appears automatically, already elevated |
+| Session starts | Widget appears automatically, already elevated (Windows) |
 
-The widget hides by moving off-screen, so nothing is left behind in the taskbar or Alt+Tab.
+The widget hides itself (`Hide()`), so nothing is left behind in the taskbar or Alt+Tab.
 
-The chosen view is remembered in `HKCU\Software\HeatLoad` (`Mode`: `0` = usage, `1` = temperature, `Compact`: `0` = full card, `1` = compact). The card's own position is stored there too (`X`, `Y`); with no saved position it sits above the clock again.
+The chosen view and the card's position are remembered in a small JSON file: `%APPDATA%\HeatLoad\settings.json` on Windows, `~/.config/HeatLoad/settings.json` on Linux, `~/Library/Application Support/HeatLoad/settings.json` on macOS. With no saved position it sits above the clock again.
 
 ### Settings
 
 Open **Ayarlar…** from the menu:
 
 - **Kullanım / Sıcaklık** — the default view.
-- **Açılışta başlat** — enable or disable the logon task (`schtasks`), effective immediately.
+- **Açılışta başlat** — enable or disable autostart (Windows: the logon task via `schtasks`; Linux: `~/.config/autostart/heatload.desktop`; macOS: `~/Library/LaunchAgents/com.heatload.HeatLoad.plist`, active from the next logon).
 - **Göstergeyi kapat** — hide the widget and keep the app in the tray.
 
 Close it with `Esc`, the ✕ button, or by clicking anywhere outside.
@@ -127,16 +170,14 @@ Windows 11 hides new tray icons in the overflow panel (the `^` arrow next to the
 
 ## How it works
 
-| Part | Source |
-|:--|:--|
-| CPU load | `GetSystemTimes` deltas between samples |
-| RAM load | `GlobalMemoryStatusEx` |
-| GPU load | NVML (`nvml.dll`) — `nvmlDeviceGetUtilizationRates` |
-| CPU temperature | LibreHardwareMonitor — `Core (Tctl/Tdie)` |
-| Motherboard / RAM temperature | LibreHardwareMonitor — DIMM SPD sensor |
-| GPU temperature | NVML — `nvmlDeviceGetTemperature` |
+| Part | Windows | Linux | macOS |
+|:--|:--|:--|:--|
+| CPU load | `GetSystemTimes` deltas | `/proc/stat` deltas | `host_statistics` (Mach) |
+| RAM load | `GlobalMemoryStatusEx` | `/proc/meminfo` | `hw.memsize` + `vm.page_*_count` |
+| GPU load | NVML (`nvml.dll`) | NVML (`libnvidia-ml.so.1`) or `gpu_busy_percent` | — |
+| CPU / GPU / RAM temperature | LibreHardwareMonitor + NVML | `/sys/class/hwmon`, NVML | — |
 
-Everything runs in one 1-second `DispatcherTimer` on the UI thread; readings are non-blocking Win32 calls plus a couple of driver queries. The app is a single WPF window with `WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE` and topmost style, so it never takes focus.
+Everything runs in one 1-second background thread; readings are non-blocking OS calls plus a couple of driver queries. The UI is a single Avalonia window: frameless, transparent, always on top, and on Windows with `WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE` so it never takes focus.
 
 ## Troubleshooting
 
@@ -161,30 +202,34 @@ Right click → *Göstergeyi gizle*, or left click the tray icon. The flip arrow
 ## Project layout
 
 ```
-HeatLoad/
-  App.xaml, App.xaml.cs        Single instance, crash log, dark menu styles
-  MainWindow.xaml(.cs)         The widget, tray icon, menu, mode switching
-  SettingsWindow.xaml(.cs)     Settings card
-  Collector.cs                 Win32 + NVML + LibreHardwareMonitor sampling
-  Autostart.cs                 schtasks query/enable/disable
-  AppSettings.cs               HKCU settings
-  app.manifest                 requireAdministrator, PerMonitorV2
-  app.ico                      Tray and exe icon (make-icon.ps1 regenerates it)
+HeatLoad.App/
+  App.axaml(.cs)               Single instance, crash log, dark styles
+  MainWindow.axaml(.cs)        The widget, tray icon, menu, mode switching, topmost guard
+  SettingsWindow.axaml(.cs)    Settings card
+  Reading.cs                   Reading record + per-OS sensor factory
+  Sensors/WindowsSensors.cs    Win32 + NVML + LibreHardwareMonitor
+  Sensors/LinuxSensors.cs      /proc, hwmon, NVML, amdgpu
+  Sensors/MacSensors.cs        Mach host_statistics + sysctl
+  Autostart.cs                 schtasks / XDG autostart / launch agent
+  AppSettings.cs               JSON settings (%APPDATA%\HeatLoad\settings.json)
 install.ps1                    Publish to Program Files + logon task
 uninstall.ps1                  Remove task, files, settings
 make-icon.ps1                  Regenerate app.ico
 installer/HeatLoad.iss         Inno Setup script for HeatLoad-Setup.exe
+.github/workflows/build.yml    Windows / Linux / macOS release builds
 ```
 
 ## Building the installer
 
 ```powershell
-dotnet publish HeatLoad -c Release -r win-x64 --self-contained true -o publish-selfcontained `
+dotnet publish HeatLoad.App -c Release -r win-x64 --self-contained true -o publish-selfcontained `
   -p:SatelliteResourceLanguages=en -p:DebugType=None -p:DebugSymbols=false
 & "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" installer\HeatLoad.iss
 ```
 
 The Setup lands in `dist\`. It bundles the self-contained publish (no .NET runtime needed on the target), plus the logon task and the uninstaller.
+
+Linux and macOS builds are produced by GitHub Actions (`.github/workflows/build.yml`, also on tag pushes): `HeatLoad-linux-x64.tar.gz`, `HeatLoad-macos-arm64.tar.gz`, `HeatLoad-macos-x64.tar.gz`.
 
 ## License
 

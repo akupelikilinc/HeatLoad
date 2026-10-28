@@ -3,17 +3,8 @@ using LibreHardwareMonitor.Hardware;
 
 namespace HeatLoad;
 
-internal readonly record struct Reading(
-    double? CpuUsage,
-    double? GpuUsage,
-    double? RamUsage,
-    double? CpuTemp,
-    double? GpuTemp,
-    double? RamTemp,
-    double? RamUsedGb);
-
 /// <summary>Usage comes from Win32/NVML; temperatures from LibreHardwareMonitor via PawnIO (admin).</summary>
-internal sealed class Collector : IDisposable
+internal sealed class WindowsSensors : ISensorSource
 {
     private readonly Computer? _computer;
     private readonly UpdateVisitor _visitor = new();
@@ -22,7 +13,7 @@ internal sealed class Collector : IDisposable
     private bool _primed;
     private ulong _prevIdle, _prevKernel, _prevUser;
 
-    public Collector()
+    public WindowsSensors()
     {
         GetSystemTimes(out var idle, out var kernel, out var user);
         _prevIdle = ToUInt64(idle);
