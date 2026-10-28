@@ -4,9 +4,20 @@ Her sürümün değişiklikleri, ekran görüntüleriyle birlikte. Görseller o 
 
 | Sürüm | Tarih | Özet |
 |:--|:--|:--|
+| **1.2.1** | 28.10.2026 | Gösterge gerçekten en üstte kalıyor |
 | **1.2.0** | 25.10.2026 | Kompakt görünüm (⤡ / ⤢) |
 | **1.1.0** | 25.10.2026 | Kart taşınabilir, konum hatırlanır |
 | **1.0.0** | 25.10.2026 | İlk sürüm: kullanım + sıcaklık, tepsi, kurulum |
+
+---
+
+## 1.2.1 — 28.10.2026 — Her zaman üstte / Always on top
+
+- Gösterge, `Topmost` bayrağına rağmen açılan pencerelerin altında kalabiliyordu; pencere artık açıkça en üst katmana taşınıyor.
+- Üstte olduğu 2 saniyede bir yeniden uygulanıyor (Explorer yeniden başlaması, tam ekran uygulamalar); sağ tık menüsü ve Ayarlar açıkken susuyor.
+- **EN:** The widget is explicitly moved into the topmost band and re-asserted every two seconds, so other windows no longer cover it.
+
+[Release v1.2.1](https://github.com/akupelikilinc/HeatLoad/releases/tag/v1.2.1)
 
 ---
 

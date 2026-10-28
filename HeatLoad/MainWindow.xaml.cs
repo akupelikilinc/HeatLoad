@@ -54,6 +54,11 @@ public partial class MainWindow : Window
             var settle = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
             settle.Tick += (_, _) => { Place(); settle.Stop(); };
             settle.Start();
+
+            // Windows drops windows out of the topmost band (shell restart, fullscreen apps); put it back.
+            var onTop = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+            onTop.Tick += (_, _) => KeepOnTop();
+            onTop.Start();
         };
         SizeChanged += (_, _) => Place();
         SystemParameters.StaticPropertyChanged += (_, e) =>
@@ -193,6 +198,17 @@ public partial class MainWindow : Window
         var hwnd = new WindowInteropHelper(this).Handle;
         var ex = GetWindowLong(hwnd, GWL_EXSTYLE);
         SetWindowLong(hwnd, GWL_EXSTYLE, ex | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE);
+
+        // The style bit alone leaves the window in the normal band; only SetWindowPos moves it above other apps.
+        SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+    }
+
+    /// <summary>Re-asserts topmost, unless our own menu or settings window is what is on top.</summary>
+    private void KeepOnTop()
+    {
+        if (HudMenu.IsOpen || _settings is { IsVisible: true }) return;
+        SetWindowPos(new WindowInteropHelper(this).Handle, HWND_TOPMOST, 0, 0, 0, 0,
+            SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
     }
 
     private void AddTray()
@@ -321,4 +337,12 @@ public partial class MainWindow : Window
 
     [DllImport("user32.dll")]
     private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+    [DllImport("user32.dll")]
+    private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, uint flags);
+
+    private static readonly IntPtr HWND_TOPMOST = new(-1);
+    private const uint SWP_NOSIZE = 0x0001;
+    private const uint SWP_NOMOVE = 0x0002;
+    private const uint SWP_NOACTIVATE = 0x0010;
 }

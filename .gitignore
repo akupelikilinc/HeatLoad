@@ -8,3 +8,5 @@ obj/
 
 publish-selfcontained/
 dist/
+
+out/
