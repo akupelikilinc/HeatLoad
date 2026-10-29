@@ -4,12 +4,24 @@ Her sürümün değişiklikleri, ekran görüntüleriyle birlikte. Görseller o 
 
 | Sürüm | Tarih | Özet |
 |:--|:--|:--|
+| **1.3.2** | 29.10.2026 | Harici kart yoksa dahili GPU gösteriliyor |
 | **1.3.1** | 29.10.2026 | Gösterge odak kaybedince hemen en üste dönüyor |
 | **1.3.0** | 28.10.2026 | Linux ve macOS sürümleri (Avalonia) |
 | **1.2.1** | 28.10.2026 | Gösterge gerçekten en üstte kalıyor |
 | **1.2.0** | 25.10.2026 | Kompakt görünüm (⤡ / ⤢) |
 | **1.1.0** | 25.10.2026 | Kart taşınabilir, konum hatırlanır |
 | **1.0.0** | 25.10.2026 | İlk sürüm: kullanım + sıcaklık, tepsi, kurulum |
+
+---
+
+## 1.3.2 — 29.10.2026 — Dahili ekran kartı / Integrated GPU
+
+- Windows'ta NVIDIA kartı yoksa GPU alanları artık boş kalmıyor: LibreHardwareMonitor'ün bulduğu kart okunuyor — AMD veya Intel, dahili GPU dahil.
+- Yük ve sıcaklık aynı karttan geliyor; kart açılışta bir kez seçiliyor, böylece değerler sürüm boyunca tutarlı kalıyor.
+- Harici NVIDIA kart varken davranış değişmedi: veriler eskisi gibi NVML'den.
+- **EN:** Without an NVIDIA card the widget reads GPU usage and temperature from the card LibreHardwareMonitor found, integrated GPUs included. One card is picked at startup, so both numbers always come from the same device.
+
+[Release v1.3.2](https://github.com/akupelikilinc/HeatLoad/releases/tag/v1.3.2)
 
 ---
 

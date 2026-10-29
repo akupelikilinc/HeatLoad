@@ -50,13 +50,13 @@ Every release, with its own screenshots: **[CHANGELOG.md](CHANGELOG.md)**.
 - Windows 10 or 11, 64-bit
 - Administrator rights — Windows does not expose CPU/board temperature sensors to normal processes
 - [PawnIO](https://pawnio.eu/) — the low-level driver LibreHardwareMonitor uses to read sensors on modern AMD CPUs (install it once; it asks for a single UAC confirmation)
-- NVIDIA GPU load and temperature come from NVML, so any recent GeForce driver is enough
+- NVIDIA GPU load and temperature come from NVML; any other card, integrated included, is read through LibreHardwareMonitor
 
 **Linux**
 
 - x64, glibc 2.31+ (Ubuntu 20.04 or newer, Fedora 32+, …)
 - CPU and RAM need nothing extra; CPU/GPU temperatures are read from `/sys/class/hwmon` (kernel drivers such as `coretemp`, `k10temp`, `amdgpu`)
-- NVIDIA GPU load/temperature use `libnvidia-ml.so.1` from the driver; AMD GPU load uses the `amdgpu` sysfs node
+- NVIDIA GPU load/temperature use `libnvidia-ml.so.1` from the driver; AMD GPU load uses the `amdgpu` sysfs node. Intel integrated GPUs expose no busy counter there, so their values stay `—`
 
 **macOS**
 
@@ -174,7 +174,7 @@ Windows 11 hides new tray icons in the overflow panel (the `^` arrow next to the
 |:--|:--|:--|:--|
 | CPU load | `GetSystemTimes` deltas | `/proc/stat` deltas | `host_statistics` (Mach) |
 | RAM load | `GlobalMemoryStatusEx` | `/proc/meminfo` | `hw.memsize` + `vm.page_*_count` |
-| GPU load | NVML (`nvml.dll`) | NVML (`libnvidia-ml.so.1`) or `gpu_busy_percent` | — |
+| GPU load | NVML (`nvml.dll`), else LibreHardwareMonitor | NVML (`libnvidia-ml.so.1`) or `gpu_busy_percent` | — |
 | CPU / GPU / RAM temperature | LibreHardwareMonitor + NVML | `/sys/class/hwmon`, NVML | — |
 
 Everything runs in one 1-second background thread; readings are non-blocking OS calls plus a couple of driver queries. The UI is a single Avalonia window: frameless, transparent, always on top, and on Windows with `WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE` so it never takes focus.
@@ -185,7 +185,7 @@ Everything runs in one 1-second background thread; readings are non-blocking OS 
 The process is not elevated, or PawnIO is missing. Install PawnIO, then start the app through the scheduled task (`Start-ScheduledTask -TaskName HeatLoad`) or run your terminal as administrator.
 
 **GPU values are 0 or missing.**
-NVML reports NVIDIA cards only. Check that the driver is installed — `nvidia-smi` should list the card.
+NVML reports NVIDIA cards only. Without one the widget reads whatever card LibreHardwareMonitor found — AMD or Intel, integrated included — and picks it once at startup. An integrated GPU often has no core temperature sensor, so its usage shows live while the temperature stays `—`.
 
 **No tray icon.**
 Windows 11 puts it in the overflow panel; drag it onto the taskbar. If it is not there either, the widget may have been hidden while the tray icon failed to create — run `install.ps1` again.

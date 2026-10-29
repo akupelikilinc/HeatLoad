@@ -48,13 +48,13 @@ Her sürümün değişiklikleri ve görselleri: **[CHANGELOG.md](CHANGELOG.md)**
 - Windows 10 veya 11, 64 bit
 - Yönetici yetkisi — Windows, CPU ve anakart sıcaklık sensörlerini normal süreçlere açmaz
 - [PawnIO](https://pawnio.eu/) — LibreHardwareMonitor'ün yeni AMD işlemcilerde sensör okumak için kullandığı düşük seviyeli sürücü (bir kez kurulur, tek UAC onayı ister)
-- NVIDIA ekran kartı yükü ve sıcaklığı NVML'den gelir; güncel bir GeForce sürücüsü yeterlidir
+- NVIDIA ekran kartı yükü ve sıcaklığı NVML'den gelir; diğer kartlar (dahili GPU dahil) LibreHardwareMonitor üzerinden okunur
 
 **Linux**
 
 - x64, glibc 2.31+ (Ubuntu 20.04 veya daha yeni, Fedora 32+, …)
 - CPU ve RAM için ek bir şey gerekmez; CPU/GPU sıcaklıkları `/sys/class/hwmon` üzerinden okunur (`coretemp`, `k10temp`, `amdgpu` gibi çekirdek sürücüleri)
-- NVIDIA GPU yükü/sıcaklığı sürücüyle gelen `libnvidia-ml.so.1` üzerinden; AMD GPU yükü `amdgpu` sysfs düğümünden
+- NVIDIA GPU yükü/sıcaklığı sürücüyle gelen `libnvidia-ml.so.1` üzerinden; AMD GPU yükü `amdgpu` sysfs düğümünden. Intel dahili GPU'lar orada meşguliyet sayacı sunmaz, bu yüzden değerleri `—` kalır
 
 **macOS**
 
@@ -172,7 +172,7 @@ Windows 11 yeni tepsi simgelerini gizli simgeler panelinde (`^` oku) tutar. Heat
 |:--|:--|:--|:--|
 | CPU kullanımı | `GetSystemTimes` farkı | `/proc/stat` farkı | `host_statistics` (Mach) |
 | RAM kullanımı | `GlobalMemoryStatusEx` | `/proc/meminfo` | `hw.memsize` + `vm.page_*_count` |
-| GPU kullanımı | NVML (`nvml.dll`) | NVML (`libnvidia-ml.so.1`) veya `gpu_busy_percent` | — |
+| GPU kullanımı | NVML (`nvml.dll`), yoksa LibreHardwareMonitor | NVML (`libnvidia-ml.so.1`) veya `gpu_busy_percent` | — |
 | CPU / GPU / RAM sıcaklığı | LibreHardwareMonitor + NVML | `/sys/class/hwmon`, NVML | — |
 
 Her şey tek bir 1 saniyelik arka plan iş parçacığında döner; okumalar bloklamayan işletim sistemi çağrıları ve birkaç sürücü sorgusundan oluşur. Arayüz tek bir Avalonia penceresidir: çerçevesiz, saydam, her zaman üstte; Windows'ta `WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE` sayesinde odağı hiç almaz.
@@ -183,7 +183,7 @@ Her şey tek bir 1 saniyelik arka plan iş parçacığında döner; okumalar blo
 Süreç yönetici değil veya PawnIO kurulu değil. PawnIO'yu kurun, ardından uygulamayı zamanlanmış görevle başlatın (`Start-ScheduledTask -TaskName HeatLoad`) ya da terminali yönetici olarak açın.
 
 **GPU değerleri 0 veya yok.**
-NVML yalnızca NVIDIA kartları görür. Sürücünün kurulu olduğunu doğrulayın — `nvidia-smi` kartı listelemeli.
+NVML yalnızca NVIDIA kartları görür. NVIDIA yoksa widget LibreHardwareMonitor'ün bulduğu kartı okur — AMD veya Intel, dahili GPU dahil — ve açılışta bir kez seçer. Dahili GPU'larda genelde çekirdek sıcaklık sensörü yoktur; kullanım canlı görünür, sıcaklık `—` kalır.
 
 **Tepsi simgesi yok.**
 Windows 11 onu gizli simgeler paneline koyar; görev çubuğuna sürükleyin. Orada da yoksa `install.ps1` betiğini tekrar çalıştırın.
