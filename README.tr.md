@@ -47,7 +47,7 @@ Her sürümün değişiklikleri ve görselleri: **[CHANGELOG.md](CHANGELOG.md)**
 
 - Windows 10 veya 11, 64 bit
 - Yönetici yetkisi — Windows, CPU ve anakart sıcaklık sensörlerini normal süreçlere açmaz
-- [PawnIO](https://pawnio.eu/) — LibreHardwareMonitor'ün yeni AMD işlemcilerde sensör okumak için kullandığı düşük seviyeli sürücü (bir kez kurulur, tek UAC onayı ister)
+- [PawnIO](https://pawnio.eu/) — LibreHardwareMonitor'ün yeni AMD işlemcilerde sensör okumak için kullandığı düşük seviyeli sürücü. Kurulum paketi bunu senin için kurar (onay kutusu varsayılan işaretli), ayrıca indirmen gerekmez; HeatLoad kaldırılınca PawnIO kurulu kalır
 - NVIDIA ekran kartı yükü ve sıcaklığı NVML'den gelir; diğer kartlar (dahili GPU dahil) LibreHardwareMonitor üzerinden okunur
 
 **Linux**
@@ -69,7 +69,7 @@ Her sürümün değişiklikleri ve görselleri: **[CHANGELOG.md](CHANGELOG.md)**
 
 **[HeatLoad-Setup.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** dosyasını indirip çalıştırın. 51 MB'lık kendinden içerikli kurulum paketi — .NET çalışma zamanı, PowerShell betiği veya SDK gerekmez.
 
-`C:\Program Files\HeatLoad` altına kurar, açılış görevini oluşturur, başlat menüsüne kısayol ekler ve *Uygulamalar ve özellikler* listesine yazılır. Tek ek gereksinim PawnIO (bkz. Gereksinimler).
+`C:\Program Files\HeatLoad` altına kurar, açılış görevini oluşturur, başlat menüsüne kısayol ekler ve *Uygulamalar ve özellikler* listesine yazılır. Sihirbaz ayrıca PawnIO sensör sürücüsünü de kurar (kutu varsayılan işaretli), böylece CPU ve RAM sıcaklıkları hemen çalışır.
 
 > Kurulum paketi kod imzalı olmadığı için SmartScreen uyarabilir: *Daha fazla bilgi* → *Yine de çalıştır*.
 

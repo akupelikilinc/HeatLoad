@@ -49,7 +49,7 @@ Every release, with its own screenshots: **[CHANGELOG.md](CHANGELOG.md)**.
 
 - Windows 10 or 11, 64-bit
 - Administrator rights — Windows does not expose CPU/board temperature sensors to normal processes
-- [PawnIO](https://pawnio.eu/) — the low-level driver LibreHardwareMonitor uses to read sensors on modern AMD CPUs (install it once; it asks for a single UAC confirmation)
+- [PawnIO](https://pawnio.eu/) — the low-level driver LibreHardwareMonitor uses to read sensors on modern AMD CPUs. The Setup offers to install it (ticked by default), so there is no separate download; it is left installed when you uninstall HeatLoad
 - NVIDIA GPU load and temperature come from NVML; any other card, integrated included, is read through LibreHardwareMonitor
 
 **Linux**
@@ -71,7 +71,7 @@ Every release, with its own screenshots: **[CHANGELOG.md](CHANGELOG.md)**.
 
 Download **[HeatLoad-Setup.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** and run it. It is a 51 MB self-contained installer — no .NET runtime, no PowerShell script, no SDK.
 
-It installs to `C:\Program Files\HeatLoad`, registers the logon task, adds Start-menu entries and appears in *Apps & features* for uninstalling. Only the .NET-free build and PawnIO (see Requirements) are needed.
+It installs to `C:\Program Files\HeatLoad`, registers the logon task, adds Start-menu entries and appears in *Apps & features* for uninstalling. The wizard also offers the PawnIO sensor driver (ticked by default) so CPU and RAM temperatures work right away.
 
 > Windows SmartScreen may warn because the installer is not code-signed: *More info* → *Run anyway*.
 

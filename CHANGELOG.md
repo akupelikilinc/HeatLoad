@@ -4,6 +4,7 @@ Her sürümün değişiklikleri, ekran görüntüleriyle birlikte. Görseller o 
 
 | Sürüm | Tarih | Özet |
 |:--|:--|:--|
+| **1.3.5** | 29.10.2026 | Sensör sürücüsü kurulum paketine eklendi |
 | **1.3.4** | 29.10.2026 | Gösterge barları sabit ve yüzdeyle tam orantılı |
 | **1.3.3** | 29.10.2026 | Kurulum sonrası "kod 740" hatası giderildi |
 | **1.3.2** | 29.10.2026 | Harici kart yoksa dahili GPU gösteriliyor |
@@ -13,6 +14,19 @@ Her sürümün değişiklikleri, ekran görüntüleriyle birlikte. Görseller o 
 | **1.2.0** | 25.10.2026 | Kompakt görünüm (⤡ / ⤢) |
 | **1.1.0** | 25.10.2026 | Kart taşınabilir, konum hatırlanır |
 | **1.0.0** | 25.10.2026 | İlk sürüm: kullanım + sıcaklık, tepsi, kurulum |
+
+---
+
+## 1.3.5 — 29.10.2026 — Sensör sürücüsü pakette / Bundled sensor driver
+
+- Windows kurulumu artık PawnIO sensör sürücüsünü de getiriyor. Sihirbazdaki *Ek bileşen* kutusu varsayılan işaretli; işaretliyse sessizce kurulur. Ayrı indirme yok, ek UAC onayı yok (kurulum zaten yönetici olarak çalışıyor).
+- Sürücü zaten kuruluysa adım sessizce atlanır; böylece PawnIO'nun "önce kaldırın" hatası hiç çıkmaz.
+- HeatLoad kaldırılınca PawnIO kurulu kalır (diğer izleme araçları da kullanır); istemeyen *Uygulamalar ve özellikler*'den kaldırabilir.
+- Kutu boş bırakılırsa uygulama yine çalışır; CPU ve RAM sıcaklıkları `—` kalır, GPU sıcaklığı NVML'den gelmeye devam eder.
+- Kurulum paketi yaklaşık 3 MB büyüdü.
+- **EN:** Setup now bundles PawnIO, the sensor driver needed for CPU and RAM temperatures. The *Optional component* box is ticked by default and installs it silently — no second download, no extra UAC prompt. It is skipped when the driver is already present and stays installed when HeatLoad is removed.
+
+[Release v1.3.5](https://github.com/akupelikilinc/HeatLoad/releases/tag/v1.3.5)
 
 ---
 
