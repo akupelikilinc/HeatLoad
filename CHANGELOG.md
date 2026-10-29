@@ -4,6 +4,7 @@ Her sürümün değişiklikleri, ekran görüntüleriyle birlikte. Görseller o 
 
 | Sürüm | Tarih | Özet |
 |:--|:--|:--|
+| **1.3.3** | 29.10.2026 | Kurulum sonrası "kod 740" hatası giderildi |
 | **1.3.2** | 29.10.2026 | Harici kart yoksa dahili GPU gösteriliyor |
 | **1.3.1** | 29.10.2026 | Gösterge odak kaybedince hemen en üste dönüyor |
 | **1.3.0** | 28.10.2026 | Linux ve macOS sürümleri (Avalonia) |
@@ -11,6 +12,13 @@ Her sürümün değişiklikleri, ekran görüntüleriyle birlikte. Görseller o 
 | **1.2.0** | 25.10.2026 | Kompakt görünüm (⤡ / ⤢) |
 | **1.1.0** | 25.10.2026 | Kart taşınabilir, konum hatırlanır |
 | **1.0.0** | 25.10.2026 | İlk sürüm: kullanım + sıcaklık, tepsi, kurulum |
+
+---
+
+## 1.3.3 — 29.10.2026 — Kurulum hatası / Installer fix
+
+- Kurulumun sonundaki "HeatLoad'u başlat" adımı artık yönetici jetonuyla çalışıyor. Önceden yükseltilmemiş kullanıcıyla başlatılmaya çalışıldığı için Windows `CreateProcess ... kod 740` hatası veriyordu; kurulumun kendisi ve açılış görevi zaten sorunsuzdu.
+- **EN:** The post-install "launch HeatLoad" step now inherits Setup's elevated token. It used to be started as the original (non-elevated) user, so Windows refused it with `CreateProcess ... code 740`.
 
 ---
 

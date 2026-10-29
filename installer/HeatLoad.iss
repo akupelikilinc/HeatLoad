@@ -2,7 +2,7 @@
 ; Uygulama Program Files'a kurulur ve açılışta yönetici olarak başlayan görevi oluşturur.
 
 #define AppName "HeatLoad"
-#define AppVersion "1.3.2"
+#define AppVersion "1.3.3"
 #define AppPublisher "Ahmet KÜPELİKILINÇ"
 #define AppURL "https://github.com/akupelikilinc/HeatLoad"
 
@@ -51,7 +51,9 @@ Name: "{group}\{#AppName} kaldır"; Filename: "{uninstallexe}"
 [Run]
 ; Görev, install.ps1 ile aynı biçimde kurulur: oturum açılışında, en yüksek yetkiyle, etkileşimli.
 Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -Command ""Register-ScheduledTask -TaskName HeatLoad -Action (New-ScheduledTaskAction -Execute '{app}\HeatLoad.exe') -Trigger (New-ScheduledTaskTrigger -AtLogOn) -Principal (New-ScheduledTaskPrincipal -UserId ($env:USERDOMAIN + '\' + $env:USERNAME) -LogonType Interactive -RunLevel Highest) -Force | Out-Null"""; Flags: runhidden
-Filename: "{app}\{#AppName}.exe"; Description: "{cm:LaunchProgram,{#StringChange(AppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+; runascurrentuser: the app manifest requires admin, so the post-install launch must inherit Setup's
+; elevated token — the default (original user) fails with CreateProcess error 740.
+Filename: "{app}\{#AppName}.exe"; Description: "{cm:LaunchProgram,{#StringChange(AppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent runascurrentuser
 
 [UninstallRun]
 Filename: "{sys}\schtasks.exe"; Parameters: "/Delete /TN ""{#AppName}"" /F"; Flags: runhidden; RunOnceId: "DelTask"
