@@ -263,9 +263,10 @@ public partial class MainWindow : Window
                         IBrush accent, double? usage, double? temperature, string fallback)
     {
         var heat = temperature is >= 85 ? Hot : temperature is >= 75 ? Warm : null;
-        var shown = _temperatureFirst ? temperature : usage;
+        // Round once so the number and the bar always agree on the same percentage.
+        var percent = (_temperatureFirst ? temperature : usage) is { } raw ? Math.Round(raw) : (double?)null;
 
-        value.Text = shown is { } v ? Math.Round(v).ToString("0") : "—";
+        value.Text = percent is { } p ? p.ToString("0") : "—";
         unit.Text = _temperatureFirst ? "°" : "%";
         value.Foreground = _temperatureFirst && heat is not null ? heat : Normal;
         bar.Background = _temperatureFirst ? heat ?? accent : accent;
@@ -276,8 +277,12 @@ public partial class MainWindow : Window
         sub.Foreground = !_temperatureFirst && heat is not null ? heat : Muted;
         dot.Fill = heat ?? accent;
 
-        var target = Math.Clamp((shown ?? 0) / 100.0, 0, 1);
-        bar.RenderTransform = new ScaleTransform(target, 1);
+        var target = Math.Clamp((percent ?? 0) / 100.0, 0, 1);
+
+        // Reuse the bar's own transform so it jumps straight to the exact percentage: a fresh
+        // ScaleTransform plus a transition made the bars slide back and forth every second.
+        if (bar.RenderTransform is ScaleTransform scale) scale.ScaleX = target;
+        else bar.RenderTransform = new ScaleTransform(target, 1);
     }
 
     private void Swap_Click(object? sender, RoutedEventArgs e) => SetTemperatureFirst(!_temperatureFirst);

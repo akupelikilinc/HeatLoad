@@ -89,12 +89,6 @@
                                 <Border.RenderTransform>
                                     <ScaleTransform ScaleX="0" />
                                 </Border.RenderTransform>
-                                <Border.Transitions>
-                                    <Transitions>
-                                        <TransformOperationsTransition Property="RenderTransform"
-                                                                      Duration="0:0:0.45" Easing="CubicEaseOut" />
-                                    </Transitions>
-                                </Border.Transitions>
                             </Border>
                         </Border>
                     </Grid>
@@ -124,12 +118,6 @@
                                 <Border.RenderTransform>
                                     <ScaleTransform ScaleX="0" />
                                 </Border.RenderTransform>
-                                <Border.Transitions>
-                                    <Transitions>
-                                        <TransformOperationsTransition Property="RenderTransform"
-                                                                      Duration="0:0:0.45" Easing="CubicEaseOut" />
-                                    </Transitions>
-                                </Border.Transitions>
                             </Border>
                         </Border>
                     </Grid>
@@ -159,12 +147,6 @@
                                 <Border.RenderTransform>
                                     <ScaleTransform ScaleX="0" />
                                 </Border.RenderTransform>
-                                <Border.Transitions>
-                                    <Transitions>
-                                        <TransformOperationsTransition Property="RenderTransform"
-                                                                      Duration="0:0:0.45" Easing="CubicEaseOut" />
-                                    </Transitions>
-                                </Border.Transitions>
                             </Border>
                         </Border>
                     </Grid>

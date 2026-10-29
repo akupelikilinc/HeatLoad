@@ -4,6 +4,7 @@ Her sürümün değişiklikleri, ekran görüntüleriyle birlikte. Görseller o 
 
 | Sürüm | Tarih | Özet |
 |:--|:--|:--|
+| **1.3.4** | 29.10.2026 | Gösterge barları sabit ve yüzdeyle tam orantılı |
 | **1.3.3** | 29.10.2026 | Kurulum sonrası "kod 740" hatası giderildi |
 | **1.3.2** | 29.10.2026 | Harici kart yoksa dahili GPU gösteriliyor |
 | **1.3.1** | 29.10.2026 | Gösterge odak kaybedince hemen en üste dönüyor |
@@ -12,6 +13,17 @@ Her sürümün değişiklikleri, ekran görüntüleriyle birlikte. Görseller o 
 | **1.2.0** | 25.10.2026 | Kompakt görünüm (⤡ / ⤢) |
 | **1.1.0** | 25.10.2026 | Kart taşınabilir, konum hatırlanır |
 | **1.0.0** | 25.10.2026 | İlk sürüm: kullanım + sıcaklık, tepsi, kurulum |
+
+---
+
+## 1.3.4 — 29.10.2026 — Sabit barlar / Steady bars
+
+- Kullanım/sıcaklık barları artık her ölçümde yeniden animasyona girmiyor. Önceden her saniye yeni bir `ScaleTransform` atanıyor ve 0,45 saniyelik geçiş yeniden başlıyordu; bar sürekli ileri geri kayıyor gibi görünüyordu.
+- Bar, gösterilen yüzdeyle birebir aynı: ölçüm kaç ise bar tam o kadar dolu, fazlası ya da eksiği yok.
+- Değer değişmediğinde bar hiç oynamıyor; değiştiğinde tek adımda yeni yüzdeye oturuyor.
+- **EN:** The bars no longer restart a transition on every reading. Each update used to assign a fresh `ScaleTransform`, which re-ran the 0.45 s animation and made the bars drift back and forth. Now the bar sits exactly at the shown percentage and only moves when the value changes.
+
+[Release v1.3.4](https://github.com/akupelikilinc/HeatLoad/releases/tag/v1.3.4)
 
 ---
 
