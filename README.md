@@ -69,7 +69,7 @@ Every release, with its own screenshots: **[CHANGELOG.md](CHANGELOG.md)**.
 
 ### Setup.exe (Windows, no SDK needed)
 
-Download **[HeatLoad-Setup.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** and run it. It is a 51 MB self-contained installer — no .NET runtime, no PowerShell script, no SDK.
+Download **[HeatLoad-Setup.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** and run it. It is a 61 MB self-contained installer — no .NET runtime, no PowerShell script, no SDK.
 
 It installs to `C:\Program Files\HeatLoad`, registers the logon task, adds Start-menu entries and appears in *Apps & features* for uninstalling. The wizard also offers the PawnIO sensor driver (ticked by default) so CPU and RAM temperatures work right away.
 

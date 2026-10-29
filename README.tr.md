@@ -67,7 +67,7 @@ Her sürümün değişiklikleri ve görselleri: **[CHANGELOG.md](CHANGELOG.md)**
 
 ### Setup.exe (SDK gerekmez)
 
-**[HeatLoad-Setup.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** dosyasını indirip çalıştırın. 51 MB'lık kendinden içerikli kurulum paketi — .NET çalışma zamanı, PowerShell betiği veya SDK gerekmez.
+**[HeatLoad-Setup.exe](https://github.com/akupelikilinc/HeatLoad/releases/latest)** dosyasını indirip çalıştırın. 61 MB'lık kendinden içerikli kurulum paketi — .NET çalışma zamanı, PowerShell betiği veya SDK gerekmez.
 
 `C:\Program Files\HeatLoad` altına kurar, açılış görevini oluşturur, başlat menüsüne kısayol ekler ve *Uygulamalar ve özellikler* listesine yazılır. Sihirbaz ayrıca PawnIO sensör sürücüsünü de kurar (kutu varsayılan işaretli), böylece CPU ve RAM sıcaklıkları hemen çalışır.
 
