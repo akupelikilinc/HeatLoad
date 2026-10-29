@@ -4,11 +4,22 @@ Her sürümün değişiklikleri, ekran görüntüleriyle birlikte. Görseller o 
 
 | Sürüm | Tarih | Özet |
 |:--|:--|:--|
+| **1.3.1** | 29.10.2026 | Gösterge odak kaybedince hemen en üste dönüyor |
 | **1.3.0** | 28.10.2026 | Linux ve macOS sürümleri (Avalonia) |
 | **1.2.1** | 28.10.2026 | Gösterge gerçekten en üstte kalıyor |
 | **1.2.0** | 25.10.2026 | Kompakt görünüm (⤡ / ⤢) |
 | **1.1.0** | 25.10.2026 | Kart taşınabilir, konum hatırlanır |
 | **1.0.0** | 25.10.2026 | İlk sürüm: kullanım + sıcaklık, tepsi, kurulum |
+
+---
+
+## 1.3.1 — 29.10.2026 — Her zaman üstte / Always on top
+
+- Gösterge ilk karede ve tepsi simgesinden geri açıldığında en üst katmana açıkça taşınıyor; önceden bu, ilk 2 saniyelik yoklamayı bekliyordu.
+- **1.2.0 kuruluysa asıl düzeltme bu sürüm:** 1.2.0 göstergesi hiçbir zaman en üst katmana girmiyordu. Kurulum, çalışan eski sürümü kapatıp yerine bu derlemeyi koyar.
+- **EN:** The card is placed in the topmost band on the first frame and whenever it is restored from the tray, instead of waiting for the two-second tick. If you are still on 1.2.0, this is the build that actually fixes the widget staying behind other windows.
+
+[Release v1.3.1](https://github.com/akupelikilinc/HeatLoad/releases/tag/v1.3.1)
 
 ---
 

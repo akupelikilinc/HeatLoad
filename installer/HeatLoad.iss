@@ -2,7 +2,7 @@
 ; Uygulama Program Files'a kurulur ve açılışta yönetici olarak başlayan görevi oluşturur.
 
 #define AppName "HeatLoad"
-#define AppVersion "1.3.0"
+#define AppVersion "1.3.1"
 #define AppPublisher "Ahmet KÜPELİKILINÇ"
 #define AppURL "https://github.com/akupelikilinc/HeatLoad"
 

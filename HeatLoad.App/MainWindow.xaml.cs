@@ -51,6 +51,7 @@ public partial class MainWindow : Window
         Opened += (_, _) =>
         {
             Place();
+            KeepOnTop();
             Opacity = 1;
             _worker.Start();
 
@@ -190,7 +191,7 @@ public partial class MainWindow : Window
         {
             Show();
             Place();
-            Topmost = true;
+            KeepOnTop(); // Topmost is already true here, so only SetWindowPos actually lifts the card
         }
         else
         {
